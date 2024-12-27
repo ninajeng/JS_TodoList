@@ -48,6 +48,7 @@ const renderList = () => {
 };
 
 const addTodo = () => {
+  if (todoInput.value) return;
   const id = new Date().getTime().toString();
   todoList.push({
     isFinish: false,
