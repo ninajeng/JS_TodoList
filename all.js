@@ -21,6 +21,8 @@ const renderTodosNum = () => {
 };
 
 const renderList = () => {
+  updateStorage(todoList);
+
   if (!todoList.length) {
     cardList.classList.add("d-none");
     return;
@@ -47,13 +49,29 @@ const renderList = () => {
   renderTodosNum();
 };
 
+const updateStorage = (data) => {
+  localStorage.setItem(storageName, JSON.stringify(data));
+};
+
+const init = () => {
+  const data = JSON.parse(localStorage.getItem(storageName));
+  if (Array.isArray(data)) {
+    todoList = data;
+  }
+  renderList();
+};
+
+const switchTabToAll = () => {
+  tabButtons[0].click();
+};
+
 const addTodo = () => {
   todoInput.value = todoInput.value.trim();
   if (!todoInput.value) {
     alert("代辦事項不得為空白，請重新輸入");
     return;
   }
-  tabButtons[0].click();
+  switchTabToAll();
   const id = new Date().getTime().toString();
   todoList.push({
     isFinish: false,
@@ -116,6 +134,7 @@ const handleListStatus = (event) => {
 const handleDeleteAllFinish = (event) => {
   event.preventDefault();
   todoList = todoList.filter((todo) => !todo.isFinish);
+  switchTabToAll();
   renderList();
 };
 
@@ -134,6 +153,8 @@ deleteAllFinishBtn.addEventListener("click", handleDeleteAllFinish);
 
 tabButtons.forEach((button) => button.addEventListener("click", handleTab));
 
+const storageName = "todos";
 let tab = "all";
 let todoList = [];
-renderList();
+
+init();
