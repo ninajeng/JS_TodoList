@@ -53,6 +53,7 @@ const addTodo = () => {
     alert("代辦事項不得為空白，請重新輸入");
     return;
   }
+  tabButtons[0].click();
   const id = new Date().getTime().toString();
   todoList.push({
     isFinish: false,
