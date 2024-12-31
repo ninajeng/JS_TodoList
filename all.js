@@ -48,7 +48,11 @@ const renderList = () => {
 };
 
 const addTodo = () => {
-  if (!todoInput.value) return;
+  todoInput.value = todoInput.value.trim();
+  if (!todoInput.value) {
+    alert("代辦事項不得為空白，請重新輸入");
+    return;
+  }
   const id = new Date().getTime().toString();
   todoList.push({
     isFinish: false,
@@ -80,7 +84,7 @@ const handleTab = (event) => {
 };
 
 const handleAddButtonStyle = () => {
-  if (!todoInput.value) {
+  if (!todoInput.value.trim()) {
     addTodoButton.classList.add("disabled");
   } else {
     addTodoButton.classList.remove("disabled");
